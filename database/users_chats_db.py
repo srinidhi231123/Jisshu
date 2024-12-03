@@ -1,7 +1,7 @@
 import datetime
 import pytz
 from motor.motor_asyncio import AsyncIOMotorClient
-from info import SETTINGS, IS_PM_SEARCH, IS_SEND_MOVIE_UPDATE, PREMIUM_POINT,REF_PREMIUM,IS_VERIFY, SHORTENER_WEBSITE3, SHORTENER_API3, THREE_VERIFY_GAP, LINK_MODE, FILE_CAPTION, TUTORIAL, DATABASE_NAME, DATABASE_URI, IMDB, IMDB_TEMPLATE, PROTECT_CONTENT, AUTO_DELETE, SPELL_CHECK, AUTO_FILTER, LOG_VR_CHANNEL, SHORTENER_WEBSITE, SHORTENER_API, SHORTENER_WEBSITE2, SHORTENER_API2, TWO_VERIFY_GAP
+from info import SETTINGS, IS_PM_SEARCH, PREMIUM_POINT,REF_PREMIUM,IS_VERIFY, SHORTENER_WEBSITE3, SHORTENER_API3, THREE_VERIFY_GAP, LINK_MODE, FILE_CAPTION, TUTORIAL, DATABASE_NAME, DATABASE_URI, IMDB, IMDB_TEMPLATE, PROTECT_CONTENT, AUTO_DELETE, SPELL_CHECK, AUTO_FILTER, LOG_VR_CHANNEL, SHORTENER_WEBSITE, SHORTENER_API, SHORTENER_WEBSITE2, SHORTENER_API2, TWO_VERIFY_GAP
 # from utils import get_seconds
 client = AsyncIOMotorClient(DATABASE_URI)
 mydb = client[DATABASE_NAME]
@@ -363,13 +363,13 @@ class Database:
             print(f"Got err in db set : {e}")
             return False
     
-    async def setFsub(self , grpID , fsubID, name):
-        return await self.grp_and_ids.update_one({'grpID': grpID} , {'$set': {'grpID': grpID , "fsubID": fsubID, "name": name}}, upsert=True)    
+    async def setFsub(self , grpID , fsubID):
+        return await self.grp_and_ids.update_one({'grpID': grpID} , {'$set': {'grpID': grpID , "fsubID": fsubID}}, upsert=True)    
         
     async def getFsub(self , grpID):
         link = await self.grp_and_ids.find_one({"grpID": grpID})
         if link is not None:
-            return {"id": link.id, "name": link.name}
+            return link.get("fsubID")
         else:
             return None
             
@@ -380,20 +380,6 @@ class Database:
         else:
             return False
 
-    async def get_send_movie_update_status(self, bot_id):
-        bot = await self.botcol.find_one({'id': bot_id})
-        if bot and bot.get('movie_update_feature'):
-            return bot['movie_update_feature']
-        else:
-            return IS_SEND_MOVIE_UPDATE
-
-    async def update_send_movie_update_status(self, bot_id, enable):
-        bot = await self.botcol.find_one({'id': int(bot_id)})
-        if bot:
-            await self.botcol.update_one({'id': int(bot_id)}, {'$set': {'movie_update_feature': enable}})
-        else:
-            await self.botcol.insert_one({'id': int(bot_id), 'movie_update_feature': enable})            
-            
     async def get_pm_search_status(self, bot_id):
         bot = await self.botcol.find_one({'id': bot_id})
         if bot and bot.get('bot_pm_search'):
@@ -416,9 +402,5 @@ class Database:
             else:
                 return None
         return await self.movies_update_channel.update_one({} , {'$set': {'id': id}} , upsert=True)
-
-    async def reset_group_settings(self, id):
-        await self.grp.update_one({'id': int(id)}, {'$set': {'settings': self.default}})
-
 db = Database()
 
