@@ -1,8 +1,3 @@
-# Credit - JISSHU BOTS
-# Modified By NBBotz
-# Some Codes Are Taken From A GitHub Repository And We Forgot His Name
-# Base Code Bishal
-
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from info import CHANNELS, MOVIE_UPDATE_CHANNEL, ADMINS , LOG_CHANNEL
@@ -64,7 +59,7 @@ async def send_movie_updates(bot, file_name, caption, file_id):
         qualities = ["ORG", "org", "hdcam", "HDCAM", "HQ", "hq", "HDRip", "hdrip", 
                      "camrip", "WEB-DL" "CAMRip", "hdtc", "predvd", "DVDscr", "dvdscr", 
                      "dvdrip", "dvdscr", "HDTC", "dvdscreen", "HDTS", "hdts"]
-        quality = await check_qualities(caption, qualities) or "HDRip"
+        quality = await check_qualities(caption.lower(), qualities) or "HDRip"
         language = ""
         nb_languages = ["Hindi", "Bengali", "English", "Marathi", "Tamil", "Telugu", "Malayalam", "Kannada", "Punjabi", "Gujrati", "Korean", "Japanese", "Bhojpuri", "Dual", "Multi"]    
         for lang in nb_languages:
@@ -76,14 +71,11 @@ async def send_movie_updates(bot, file_name, caption, file_id):
             return 
         processed_movies.add(movie_name)    
         poster_url = await get_imdb(movie_name)
-        caption_message = f"#New_File_Added ✅\n\nFile_Name:- <code>{movie_name}</code>\n\nLanguage:- {language}\n\nQuality:- {quality}" 
-        search_movie = movie_name.replace(" ", '-')
+        caption_message = f"#New_File_Added ✅\n\nFile_Name:- <code>{movie_name}</code>\n\nLanguage:- {language}\n\nQuality:- {quality}"    
         movie_update_channel = await db.movies_update_channel_id()    
-        btn = [[
-            InlineKeyboardButton('📂 ɢᴇᴛ ғɪʟᴇ 📂', url=f'https://telegram.me/{temp.U_NAME}?start=getfile-{search_movie}')
-        ],[
-            InlineKeyboardButton('♻️ ʜᴏᴡ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ♻️', url=f'https://t.me/JISSHU_BOTS')
-        ]]
+        btn = [
+            [InlineKeyboardButton('Get File', url=f'https://t.me/{temp.U_NAME}?start=pm_mode_file_{ADMINS[0]}_{file_id}')]
+        ]
         reply_markup = InlineKeyboardMarkup(btn)
         if poster_url:
             await bot.send_photo(movie_update_channel if movie_update_channel else MOVIE_UPDATE_CHANNEL, 
@@ -95,5 +87,4 @@ async def send_movie_updates(bot, file_name, caption, file_id):
     except Exception as e:
         print('Failed to send movie update. Error - ', e)
         await bot.send_message(LOG_CHANNEL, f'Failed to send movie update. Error - {e}')
-    
-  
+
