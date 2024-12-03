@@ -71,9 +71,9 @@ REQUEST_CHANNEL = int(request_channel) if request_channel and id_pattern.search(
 START_IMG = (environ.get('START_IMG', 'https://graph.org/file/2bf5bb32bbc4ee87099d7.jpg')).split()
 FORCESUB_IMG = environ.get('FORCESUB_IMG', 'https://graph.org/file/2bf5bb32bbc4ee87099d7.jpg')
 REFER_PICS = (environ.get("REFER_PICS", "https://envs.sh/PSI.jpg")).split() 
-PAYPICS = (environ.get('PAYPICS', 'https://graph.org/file/c0dc1c1d4bca95b56cc73.jpg')).split()
+PAYPICS = (environ.get('PAYPICS', 'https://envs.sh/zSv.jpg')).split()
 SUBSCRIPTION = (environ.get('SUBSCRIPTION', 'https://envs.sh/W5b.jpg'))
-REACTIONS = ["👀", "😱", "🔥", "😍", "🎉", "🥰", "😇", "⚡"]
+REACTIONS = ["👀", "🕊️", "🔥", "😍", "🎉", "💥", "😇", "⚡"]
 #---------------------------------------------------------------
 #---------------------------------------------------------------
 #---------------------------------------------------------------
@@ -91,7 +91,7 @@ IMDB_TEMPLATE = environ.get('IMDB_TEMPLATE', f'{script.IMDB_TEMPLATE_TXT}')
 LONG_IMDB_DESCRIPTION = is_enabled('LONG_IMDB_DESCRIPTION', False)
 PROTECT_CONTENT = is_enabled('PROTECT_CONTENT', False)
 SPELL_CHECK = is_enabled('SPELL_CHECK', True)
-LINK_MODE = is_enabled('LINK_MODE', True)
+LINK_MODE = is_enabled('LINK_MODE', False)
 
 #---------------------------------------------------------------
 #---------------------------------------------------------------
