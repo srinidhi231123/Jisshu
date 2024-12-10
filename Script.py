@@ -343,7 +343,7 @@ Aᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴍᴀᴋᴇ ᴍᴇ ᴀ�
 
     SOURCE_TXT = """<b>
 NOTE:
-- ꜱᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ʜᴇʀᴇ ◉› :<blockquote><a href=f"t.me/UHD_Tamil">𝐔𝐇𝐃 𝐓𝐚𝐦𝐢𝐥</a><blockquote>
+- ꜱᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ʜᴇʀᴇ ◉› :<blockquote><a href=f"t.me/UHD_Tamil">𝐔𝐇𝐃-𝐓𝐚𝐦𝐢𝐥-𝐁𝐨𝐭</a><blockquote>
 
 developer : ~ 𝓖𝓸𝓹𝓲 🍂
 </b>""" 
